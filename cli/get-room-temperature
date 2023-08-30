@@ -1,0 +1,68 @@
+#!/usr/bin/python3
+
+import json
+import time
+
+import requests
+
+temperature = 0
+humidity = 0
+unit = 'unit'
+
+
+def get_temperature():
+
+    global humidity
+    global unit
+
+    temperature_uri = 'http://192.168.1.156/cm?cmnd=status%2010'
+    response = requests.get(temperature_uri)
+
+    # BUGFIX: sometimes the nodemcu returns null values in the response string, so re-query
+    # while temperature is None:
+    while json.loads(response.text)['StatusSNS']['AM2301']['Temperature'] is None:
+        time.sleep(5)
+        response = requests.get(temperature_uri)
+        print(response.text)
+        print( 'temperature:', json.loads(response.text)['StatusSNS']['AM2301']['Temperature'] )
+
+    # print( response.text)
+
+    temperature = float(json.loads(response.text)['StatusSNS']['AM2301']['Temperature'])
+    humidity = float(json.loads(response.text)['StatusSNS']['AM2301']['Humidity'])
+    unit = json.loads(response.text)['StatusSNS']['TempUnit']
+
+    return temperature
+
+
+def main():
+    temperature = get_temperature() #temperature=80.40ºF
+    print( 'room: temperature='  + str(temperature) +'º' + unit + ', humidity=' + str(humidity) + '%')
+
+
+main()
+
+
+# TODO
+#
+# add a try/except block around the json.loads calls
+#incorrect_json = '{ name":"John "age":30 "car:"None" }'
+#try:
+#   a_json = json.loads(incorrect_json)
+#   print(a_json)
+#except json.decoder.JSONDecodeError:
+#   print("String could not be converted to JSON")
+#
+# OUTPUT
+# String could not be converted to JSON
+#
+#correct_json = '{ "name": "John", "age": 30, "car": "None" }'
+#try:
+#   a_json = json.loads(correct_json)
+#   print(a_json)
+#except json.decoder.JSONDecodeError:
+#   print("String could not be converted to JSON")
+#
+# OUTPUT
+# {'name': 'John', 'age': 30, 'car': 'None'}
+
