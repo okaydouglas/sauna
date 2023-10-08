@@ -16,6 +16,8 @@ def get_temperature():
     global unit
 
     temperature_uri = 'http://192.168.1.156/cm?cmnd=status%2010'
+    temperature_uri = 'http://room-weather-sensor/cm?cmnd=status%2010'
+    temperature_uri = 'http://192.168.2.156/cm?cmnd=status%2010'
     response = requests.get(temperature_uri)
 
     # BUGFIX: sometimes the nodemcu returns null values in the response string, so re-query

@@ -371,9 +371,15 @@ class SaunaSession:
         self.update_sauna()
 
         # play an alarm that will interrupt youtube/vlc music...
-        args = ['/usr/bin/cvlc',
-                '-q',
-                '/usr/share/sounds/Oxygen-Sys-App-Error-Serious-Very.ogg'
+        mpv = '/data/data/com.termux/files/usr/bin/mpv'
+        mpv = '/usr/bin/mpv'
+        homedir = os.environ.get('HOME')
+        soundfile = os.path.join(homedir, 'src', 'sauna', 'sounds',
+                                 'Oxygen-Sys-App-Error-Serious-Very.ogg')
+        args = [mpv,
+                '--quiet',
+                '--loop=inf',
+                soundfile
                 ]
         p = subprocess.Popen(args,
                              stdout=subprocess.DEVNULL,
@@ -412,7 +418,8 @@ class SaunaSession:
         # configure standard logging
         # appname = r'sauna'
         appname = os.path.splitext(os.path.basename(sys.argv[0]))[0]
-        logfile = r'/home/the-yarnist/.local/log/' + appname + '.log'
+        homedir = os.environ.get('HOME')
+        logfile = os.path.join(homedir, '.local', 'log', appname + '.log')
         logheader = " ".join([
                                 platform.node(),
                                 appname + '[' + str(os.getpid()) + ']:'

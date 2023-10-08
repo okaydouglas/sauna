@@ -71,8 +71,10 @@ def stop_media_player():
 
 def turn_sauna_light_on():
     # logger.info('turn sauna light on')
+    # '/home/the-yarnist/bin/rgba-poke',
+    rgbapokebin = os.path.join(os.environ.get('HOME'),'bin', 'rgba-poke')
     args = [
-        '/home/the-yarnist/bin/rgba-poke',
+        rgbapokebin,
         'sauna-bulb-1',
         '255,0,0,255'
     ]
@@ -87,8 +89,10 @@ def turn_sauna_light_on():
 
 def turn_sauna_light_off():
     # logger.info('turn sauna light off')
+    # '/home/the-yarnist/bin/rgba-poke',
+    rgbapokebin = os.path.join(os.environ.get('HOME'),'bin', 'rgba-poke')
     args = [
-        '/home/the-yarnist/bin/rgba-poke',
+        rgbapokebin,
         'sauna-bulb-1',
         '0,0,0,0'
     ]
@@ -181,7 +185,13 @@ def get_sauna_temperature():
     readings = []
 
     uri = 'http://' + ip + '/cm?cmnd=status%2010'
-    r = requests.get(uri)
+    # r = requests.get(uri)
+    try:
+        r = requests.get(uri)
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+        print(e)
+        raise SystemExit(e)
+
     # Parse JSON into an object with attributes corresponding to dict keys.
     response = json.loads(r.text, object_hook=lambda d: SimpleNamespace(**d))
 
