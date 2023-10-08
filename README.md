@@ -1,6 +1,6 @@
 # sauna
 
-This is the overarching controller for the home automation setup.
+The overarching controller for the home automation setup.
 
 ## Management
 
