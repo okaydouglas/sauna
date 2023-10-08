@@ -27,3 +27,23 @@ venv
 .venv
 
 /build
+
+#
+# Do not include artifacts/targets of the build process (epubs, htmls)
+#
+builds/
+
+#
+# Do not include binary images
+#
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+#
+# Do not include vim swap files
+#
+*.swp
+*.swo
+
