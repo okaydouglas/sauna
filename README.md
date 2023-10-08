@@ -1,4 +1,4 @@
-# SOAR
+# sauna
 
 This is the overarching controller for the home automation setup.
 
@@ -37,7 +37,7 @@ Implement the following command/sets:
 
 + create an optimized light controller with:
 
-  +  presets (--red, --yellow, --faint, --bright, ...) 
+  +  presets (--red, --yellow, --faint, --bright, ...)
 
   + --rgbb (red greeb blue + brightness)
 
