@@ -39,7 +39,7 @@ Implement the following command/sets:
 
   +  presets (--red, --yellow, --faint, --bright, ...)
 
-  + --rgbb (red greeb blue + brightness)
+  + --rgbb (red green blue + brightness)
 
   + candle mode/flicker
 
